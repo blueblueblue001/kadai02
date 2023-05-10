@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+    <title>Japanese Janken Game</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="h1-wapper">
+            <h1>RPS Game</h1>
+            <img src="img/rock-paper-scissors-story.jpg" alt="">
+        </div>
+    </header>
+
+    <main style = "display: none;">
+        <div>
+            <p class="intro">
+                日本では「じゃんけん」は「ぐー」「ちょき」「ぱー」と言いますね。
+                <br>では英語で「じゃんけん」は何と言うのでしょうか。
+                <br>それは ”Rock-Scissors-Pater" です。
+                <br>このサイトでは、PCを相手に、
+                <br> ”Rock-Scissors-Pater" ゲームを楽しんでみましょう！
+
+            </p>
+        </div>
+        <div class="h2-wrapper">
+            <h2>rock-paper-scissors, <br>one two three...</h2>
+        </div>
+        
+        <div class="user_btn_wrapper">
+            <button id="gu_btn" onclick="janken(0)" class="user_btn">Rock</button>
+            <button id="cho_btn" onclick="janken(1)" class="user_btn">Scissors</button>
+            <button id="par_btn" onclick="janken(2)" class="user_btn">Paper</button>
+        </div>
+        <div class="pc_wrapper">
+            <h2>Conputor's hand is... <br>"<span id="pc_hands">What？</span>"</h2>
+        </div>
+        <div class="result-wrapper">
+          <h2 id="judgment" class="result">?</h2>
+        </div>
+        <div class="counter_wrapper">
+            <table class="counter_table">
+                <tr>
+                    <th>Won</th>
+                    <td id="w">0</td>
+                </tr>
+                <tr>
+                    <th>Lost</th>
+                    <td id="l">0</td>
+                </tr>
+                <tr>
+                    <th>Draw</th>
+                    <td id="d">0</td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $("main").fadeIn(500);
+   
+        w=0;
+        l=0;
+        d=0;
+        /**
+         * じゃんけん処理
+         * @param user_num: ボタン値
+         * @return HTML
+         */
+        function janken(user_num){
+
+            // 乱数で今NPC側の値を取得
+            var npc_num = Math.floor(Math.random() * 3);
+
+            // 出力用
+            var resultHTML = "";
+            var pc_hands = "";
+
+            pc_hands = changeText(npc_num);
+      
+        // 勝ち負け判定
+        if(user_num == npc_num) {
+        // 引き分け
+        resultHTML = "Draw";
+        d++;
+        } else if((user_num == 0 && npc_num == 1)||(user_num == 1 && npc_num == 2)||(user_num == 2 && npc_num == 0)) {
+        // 勝ち
+        resultHTML = "Won!";
+        w++;
+    
+        } else  if((user_num == 0 && npc_num == 2)||(user_num == 1 && npc_num == 0)||(user_num == 2 && npc_num == 1)) {
+        // 負け
+        resultHTML = "Lost...";
+        l++;
+        }else{
+            resultHTML = "Play again";     
+        };
+
+
+        // 結果出力
+        document.getElementById("pc_hands").innerHTML = pc_hands;
+        document.getElementById("judgment").innerHTML = resultHTML;
+        document.getElementById("w").innerHTML = w;
+        document.getElementById("l").innerHTML = l;
+        document.getElementById("d").innerHTML = d;
+    
+        }; 
+
+        /**
+        * 値を出力用テキストに変換する処理
+        * @param num: 値(整数)
+        * @return String
+        */
+        function changeText(num){
+        var item = "";
+        switch (num){
+        case 0: item = "Rock"; break;
+        case 1: item = "Scissors"; break;
+        case 2: item = "Paper"; break;
+        };
+        return item;
+        
+        };
+       
+
+    </script>
+</body>
+
+<footer class="footer-wrapper">
+    <div>
+        <small class="footer-text">2023 Chika Iwanaga all rights reserved.</small>
+    </div>
+</footer>
+
+</html>
